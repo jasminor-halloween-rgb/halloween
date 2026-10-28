@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Halloween</title>
+<meta name="theme-color" content="#241431">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #241431;
+    --frame: #3a2250;
+    --bone: #f2e8da;
+    --pumpkin: #ff7a1a;
+    --ink: #241431;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background: var(--night);
+    color: var(--bone);
+    font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+  }
+  main {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+  }
+  h1 {
+    margin: 0;
+    font-weight: 800;
+    font-size: clamp(2rem, 9vw, 2.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .frame {
+    width: 100%;
+    background: var(--frame);
+    padding: 10px;
+    border-radius: 18px;
+  }
+  .frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  .fallback {
+    display: none;
+    padding: 28px 12px;
+    color: var(--bone);
+    font-weight: 500;
+  }
+  .fallback a { color: var(--pumpkin); }
+  .cta {
+    display: block;
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--pumpkin);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 14px;
+  }
+  .cta:hover { background: #ff8f3d; }
+  .cta:focus-visible {
+    outline: 3px solid var(--bone);
+    outline-offset: 3px;
+  }
+  .cta:active { transform: translateY(1px); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Happy Halloween</h1>
+
+  <div class="frame">
+    <img
+      src="https://media.giphy.com/media/rkyUHktm4RAys/giphy.gif"
+      alt="GIF musim gugur dari Giphy"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+    <p class="fallback">GIF-nya gagal dimuat. <a href="https://giphy.com/gifs/first-fall-autumn-rkyUHktm4RAys">Buka di Giphy</a></p>
+  </div>
+
+  <a class="cta" href="https://www.instagram.com/jasminor.id/">Buka Instagram @jasminor.id</a>
+</main>
+</body>
+</html>
