@@ -18,6 +18,7 @@
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html, body { margin: 0; min-height: 100%; }
   body {
     background: var(--night);
@@ -78,26 +79,72 @@
     border-radius: 14px;
   }
   .cta:hover { background: #ff8f3d; }
-  .cta:focus-visible {
-    outline: 3px solid var(--bone);
-    outline-offset: 3px;
-  }
+  .cta:focus-visible { outline: 3px solid var(--bone); outline-offset: 3px; }
   .cta:active { transform: translateY(1px); }
+
+  /* Layar pembuka: sentuhan pertama membuka izin suara di browser */
+  .gate {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: var(--night);
+    color: var(--bone);
+    font: inherit;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 8vw, 2.4rem);
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    padding: 24px;
+    z-index: 10;
+  }
+  .gate span {
+    display: inline-block;
+    padding: 18px 26px;
+    background: var(--pumpkin);
+    color: var(--ink);
+    border-radius: 16px;
+  }
+  .gate:focus-visible { outline: 3px solid var(--bone); outline-offset: -8px; }
 </style>
 </head>
 <body>
-<main>
+
+<button class="gate" id="gate" type="button"><span>Ketuk untuk membuka</span></button>
+
+<main id="stage" hidden>
   <h1>Happy Halloween</h1>
 
   <div class="frame">
     <img
-      src="https://media.giphy.com/media/rkyUHktm4RAys/giphy.gif"
-      alt="GIF musim gugur dari Giphy"
+      id="gif"
+      alt="GIF Halloween dari Giphy"
       onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-    <p class="fallback">GIF-nya gagal dimuat. <a href="https://giphy.com/gifs/first-fall-autumn-rkyUHktm4RAys">Buka di Giphy</a></p>
+    <p class="fallback">GIF-nya gagal dimuat. <a href="https://giphy.com/gifs/headache-halloween-horror-signedearth-Gj2nHXUa85FXKngX46">Buka di Giphy</a></p>
   </div>
 
   <a class="cta" href="https://www.instagram.com/jasminor.id/">Buka Instagram @jasminor.id</a>
 </main>
+
+<audio id="snd" src="sound.mp3" preload="auto"></audio>
+
+<script>
+  var gate = document.getElementById('gate');
+  var stage = document.getElementById('stage');
+  var gif = document.getElementById('gif');
+  var snd = document.getElementById('snd');
+
+  gate.addEventListener('click', function () {
+    gate.hidden = true;
+    stage.hidden = false;
+    // GIF dimuat setelah ketukan supaya animasinya mulai bersamaan dengan suara
+    gif.src = 'https://media.giphy.com/media/Gj2nHXUa85FXKngX46/giphy.gif';
+    try {
+      var p = snd.play();
+      if (p && p.catch) { p.catch(function () {}); }
+    } catch (e) {}
+  }, { once: true });
+</script>
 </body>
 </html>
