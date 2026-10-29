@@ -4,24 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Happy Halloween</title>
-<meta name="theme-color" content="#241431">
+<meta name="theme-color" content="#14081f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Creepster&display=swap" rel="stylesheet">
 <style>
   :root {
-    --night: #241431;
-    --frame: #3a2250;
+    --night: #14081f;
+    --plum: #2a1240;
+    --frame: #3a1a55;
     --bone: #f2e8da;
+    --moon: #f6e7b0;
     --pumpkin: #ff7a1a;
-    --ink: #241431;
+    --ink: #14081f;
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
   [hidden] { display: none !important; }
   html, body { margin: 0; min-height: 100%; }
   body {
-    background: var(--night);
+    background:
+      radial-gradient(ellipse at 50% 0%, #4a1f6b 0%, transparent 60%),
+      linear-gradient(180deg, var(--plum) 0%, var(--night) 70%);
+    background-attachment: fixed;
     color: var(--bone);
     font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     min-height: 100vh;
@@ -29,9 +34,63 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: max(24px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+    padding: max(24px, env(safe-area-inset-top)) 20px max(120px, env(safe-area-inset-bottom));
+    overflow-x: hidden;
   }
+
+  /* ---------- Latar: bulan, kelelawar, kabut, kuburan ---------- */
+  .scene { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .moon {
+    position: absolute;
+    top: 6%;
+    right: 8%;
+    width: clamp(90px, 22vw, 170px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 35%, #d9c98c 0 8%, transparent 9%),
+      radial-gradient(circle at 62% 60%, #d9c98c 0 11%, transparent 12%),
+      radial-gradient(circle at 70% 25%, #d9c98c 0 5%, transparent 6%),
+      var(--moon);
+    box-shadow: 0 0 60px 20px rgba(246, 231, 176, .25), 0 0 160px 60px rgba(255, 122, 26, .12);
+  }
+  .bat {
+    position: absolute;
+    left: -80px;
+    width: 54px;
+    fill: #0b0412;
+    animation: fly linear infinite;
+  }
+  .bat svg { display: block; width: 100%; animation: flap .35s ease-in-out infinite alternate; transform-origin: 50% 50%; }
+  .bat.b1 { top: 14%; animation-duration: 16s; }
+  .bat.b2 { top: 28%; width: 38px; animation-duration: 22s; animation-delay: -9s; }
+  .bat.b3 { top: 8%;  width: 44px; animation-duration: 19s; animation-delay: -14s; }
+  @keyframes fly {
+    0%   { transform: translate(0, 0); }
+    50%  { transform: translate(55vw, 40px); }
+    100% { transform: translate(calc(100vw + 160px), -20px); }
+  }
+  @keyframes flap { from { transform: scaleY(1); } to { transform: scaleY(.45); } }
+
+  .fog {
+    position: absolute;
+    left: -20%;
+    width: 140%;
+    height: 160px;
+    bottom: 40px;
+    background: radial-gradient(ellipse at center, rgba(190, 160, 230, .22), transparent 70%);
+    filter: blur(14px);
+    animation: drift 18s ease-in-out infinite alternate;
+  }
+  .fog.f2 { bottom: 10px; animation-duration: 26s; animation-direction: alternate-reverse; opacity: .8; }
+  @keyframes drift { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+
+  .graveyard { position: absolute; left: 0; bottom: 0; width: 100%; height: 150px; display: block; }
+
+  /* ---------- Konten ---------- */
   main {
+    position: relative;
+    z-index: 1;
     width: 100%;
     max-width: 420px;
     display: flex;
@@ -42,16 +101,31 @@
   }
   h1 {
     margin: 0;
-    font-weight: 800;
-    font-size: clamp(2rem, 9vw, 2.75rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    font-family: "Creepster", "Bricolage Grotesque", system-ui, sans-serif;
+    font-weight: 400;
+    font-size: clamp(3rem, 15vw, 4.6rem);
+    line-height: .95;
+    letter-spacing: .02em;
+    color: var(--pumpkin);
+    text-shadow: 0 0 8px rgba(255, 122, 26, .7), 0 0 28px rgba(255, 122, 26, .45), 0 3px 0 #7a2d00;
+    animation: flicker 5s linear infinite;
+  }
+  @keyframes flicker {
+    0%, 4%, 8%, 100% { opacity: 1; }
+    5%   { opacity: .45; }
+    6%   { opacity: 1; }
+    7%   { opacity: .6; }
+    52%  { opacity: 1; }
+    53%  { opacity: .5; }
+    54%  { opacity: 1; }
   }
   .frame {
     width: 100%;
     background: var(--frame);
     padding: 10px;
     border-radius: 18px;
+    border: 2px solid var(--pumpkin);
+    box-shadow: 0 0 24px rgba(255, 122, 26, .35), 0 10px 30px rgba(0, 0, 0, .5);
   }
   .frame img {
     display: block;
@@ -77,6 +151,7 @@
     font-size: 1.1rem;
     text-decoration: none;
     border-radius: 14px;
+    box-shadow: 0 0 20px rgba(255, 122, 26, .4);
   }
   .cta:hover { background: #ff8f3d; }
   .cta:focus-visible { outline: 3px solid var(--bone); outline-offset: 3px; }
@@ -89,29 +164,66 @@
     width: 100%;
     height: 100%;
     border: 0;
-    background: var(--night);
+    background:
+      radial-gradient(circle at 50% 45%, rgba(255, 122, 26, .18), transparent 55%),
+      var(--night);
     color: var(--bone);
     font: inherit;
-    font-weight: 800;
-    font-size: clamp(1.6rem, 8vw, 2.4rem);
-    letter-spacing: -0.01em;
     cursor: pointer;
     padding: 24px;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
   }
+  .gate .eyes { font-size: 2.2rem; letter-spacing: .3em; animation: blink 4s infinite; }
+  @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
   .gate span {
     display: inline-block;
     padding: 18px 26px;
     background: var(--pumpkin);
     color: var(--ink);
     border-radius: 16px;
+    font-weight: 800;
+    font-size: clamp(1.4rem, 7vw, 2rem);
+    box-shadow: 0 0 30px rgba(255, 122, 26, .5);
   }
   .gate:focus-visible { outline: 3px solid var(--bone); outline-offset: -8px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bat, .bat svg, .fog, h1, .gate .eyes { animation: none; }
+    .bat { left: 20%; }
+  }
 </style>
 </head>
 <body>
 
-<button class="gate" id="gate" type="button"><span>Ketuk untuk membuka</span></button>
+<div class="scene" aria-hidden="true">
+  <div class="moon"></div>
+  <div class="bat b1"><svg viewBox="0 0 60 30"><path d="M30 12C26 6 18 2 2 4c6 4 6 10 10 14 4-4 8-4 12 2 2-4 4-6 6-2 2-4 4-2 6 2 4-6 8-6 12-2 4-4 4-10 10-14-16-2-24 2-28 8z"/></svg></div>
+  <div class="bat b2"><svg viewBox="0 0 60 30"><path d="M30 12C26 6 18 2 2 4c6 4 6 10 10 14 4-4 8-4 12 2 2-4 4-6 6-2 2-4 4-2 6 2 4-6 8-6 12-2 4-4 4-10 10-14-16-2-24 2-28 8z"/></svg></div>
+  <div class="bat b3"><svg viewBox="0 0 60 30"><path d="M30 12C26 6 18 2 2 4c6 4 6 10 10 14 4-4 8-4 12 2 2-4 4-6 6-2 2-4 4-2 6 2 4-6 8-6 12-2 4-4 4-10 10-14-16-2-24 2-28 8z"/></svg></div>
+  <div class="fog"></div>
+  <div class="fog f2"></div>
+  <svg class="graveyard" viewBox="0 0 800 150" preserveAspectRatio="xMidYMax slice" fill="#0b0412">
+    <path d="M0 150V110C80 90 160 100 240 112s160 8 260-4 200-14 300 6V150z"/>
+    <!-- nisan -->
+    <path d="M70 120V84a16 16 0 0 1 32 0v36z"/>
+    <path d="M150 124V96a12 12 0 0 1 24 0v28z"/>
+    <path d="M610 118V80a18 18 0 0 1 36 0v38z"/>
+    <path d="M700 122V98a12 12 0 0 1 24 0v24z"/>
+    <path d="M300 128h6V96h-14v-6h14v-8h6v8h14v6h-14v32z"/>
+    <!-- pohon mati -->
+    <path d="M470 125c2-30 0-50-4-70-8-6-14-14-18-24 8 4 16 8 22 16 0-14 4-26 10-38 0 14 0 26 4 38 6-8 14-12 24-14-8 6-14 14-16 24 8 4 14 10 18 18-10-4-18-4-24 0 0 18 2 36 6 50z"/>
+  </svg>
+</div>
+
+<button class="gate" id="gate" type="button">
+  <div class="eyes" aria-hidden="true">👁️ 👁️</div>
+  <span>Ketuk untuk membuka</span>
+</button>
 
 <main id="stage" hidden>
   <h1>Happy Halloween</h1>
